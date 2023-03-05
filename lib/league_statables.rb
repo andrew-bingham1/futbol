@@ -31,7 +31,7 @@ module LeagueStatables
 
   def total_away_games_by_team
     total_away_games_by_team = Hash.new(0)
-     @games.each do |game|
+    @games.each do |game|
       total_away_games_by_team[game.away_team_id] += 1 
     end
     total_away_games_by_team
