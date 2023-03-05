@@ -11,6 +11,6 @@ files = {
   game_teams: game_teams_path
 }
 
-stat_tracker = Stats.new(files)
+stat_tracker = StatTracker.new(files)
 
 require 'pry'; binding.pry
