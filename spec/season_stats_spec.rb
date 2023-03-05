@@ -58,11 +58,12 @@ RSpec.describe SeasonStats do
       expect(@season_stat.team_id_worst_shot_perc_by_season('20142015')).to eq('53')
     end
   end
-# test edge cases for a few tests
+
   describe '#most_accurate_team' do
     it 'can return the team with the most accuracy per season' do
       expect(@season_stat.most_accurate_team('20132014')).to eq('Real Salt Lake')
       expect(@season_stat.most_accurate_team('20142015')).to eq('Toronto FC')
+      expect(@season_stat.most_accurate_team('20202021')).to eq('Invalid Season selection')
     end
   end
 
@@ -70,6 +71,7 @@ RSpec.describe SeasonStats do
     it 'can return the team with the least accuracy pr season' do
       expect(@season_stat.least_accurate_team('20132014')).to eq('New York City FC')
       expect(@season_stat.least_accurate_team('20142015')).to eq('Columbus Crew SC')
+      expect(@season_stat.least_accurate_team('20202021')).to eq('Invalid Season selection')
     end
   end
 
@@ -77,11 +79,13 @@ RSpec.describe SeasonStats do
     it '#winningest_coach' do
       expect(@season_stat.winningest_coach('20132014')).to eq('Claude Julien')
       expect(@season_stat.winningest_coach('20142015')).to eq('Alain Vigneault')
+      expect(@season_stat.winningest_coach('20202021')).to eq('Invalid Season selection')
     end 
 
     it '#worst_coach' do
       expect(@season_stat.worst_coach('20132014')).to eq('Peter Laviolette')
       expect(@season_stat.worst_coach('20142015')).to eq('Craig MacTavish').or(eq('Ted Nolan'))
+      expect(@season_stat.worst_coach('20202021')).to eq('Invalid Season selection')
     end
 
     it '#game_total' do
@@ -97,15 +101,27 @@ RSpec.describe SeasonStats do
     it "#most_tackles" do
       expect(@season_stat.most_tackles("20132014")).to eq "FC Cincinnati"
       expect(@season_stat.most_tackles("20142015")).to eq "Seattle Sounders FC"
+      expect(@season_stat.most_tackles('20202021')).to eq('Invalid Season selection')
     end
 
     it "#fewest_tackles" do
       expect(@season_stat.fewest_tackles("20132014")).to eq "Atlanta United"
       expect(@season_stat.fewest_tackles("20142015")).to eq "Orlando City SC"
+      expect(@season_stat.fewest_tackles('20202021')).to eq('Invalid Season selection')
     end
 
     it '#tackles_total' do 
       expect(@season_stat.tackles_total("20132014")).to be_a(Hash)
+    end
+  end
+
+  describe 'error message' do
+    it '#season_verification' do
+      expect(@season_stat.season_not_found?(20202021)).to eq true
+    end
+
+    it '#invalid_season' do
+      expect(@season_stat.invalid_season).to eq('Invalid Season selection')
     end
   end
 end

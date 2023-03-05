@@ -1,5 +1,16 @@
 module SeasonStatables
 
+  def season_not_found?(season)
+    seasons = @game_teams.map(&:season_id)
+    if !seasons.include?(season)
+     true
+    end
+  end
+
+  def invalid_season
+    'Invalid Season selection'
+  end
+
   def all_goals_by_team_by_season(season)
     team_goals_season = Hash.new(0)
     @game_teams.each do |game|
